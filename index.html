@@ -1,423 +1,598 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dreamz Wealth – Private Copy Trading met ervaren traders</title>
+  <title>Dreamz Wealth – Private Copy Trading with Avatar Fire and Ash</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --bg: #020617;
-      --card: #020922;
-      --accent: #facc15;
+      --bg: #05060a;
+      --bg-alt: #0b0d16;
+      --card: #111320;
+      --accent: #f35b36;
+      --accent-soft: rgba(243, 91, 54, 0.16);
       --text: #f9fafb;
       --muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.3);
+      --success: #22c55e;
+      --warning: #eab308;
     }
 
-    * { box-sizing:border-box; margin:0; padding:0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text","Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #0b1120 0, #020617 45%, #000814 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111320 0, #05060a 45%, #01010a 100%);
       color: var(--text);
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
-      max-width:100vw;
-      overflow-x:hidden;
     }
 
-    a { color:inherit; text-decoration:none; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
     .page {
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      max-width:100vw;
-      overflow-x:hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
-      border-bottom:1px solid rgba(148,163,184,0.15);
-      background:linear-gradient(to bottom, rgba(15,23,42,0.96), rgba(15,23,42,0.6));
-      backdrop-filter:blur(18px);
-      position:sticky; top:0; z-index:40;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.4));
+      backdrop-filter: blur(18px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
 
     .nav {
-      max-width:1120px; margin:0 auto; padding:14px 20px;
-      display:flex; align-items:center; justify-content:space-between;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .nav-left { display:flex; align-items:center; gap:10px; }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
     .logo-mark {
-      width:30px; height:30px; border-radius:999px;
-      background:radial-gradient(circle at 30% 10%, #facc15, #eab308 40%, #0f172a 100%);
-      box-shadow:0 0 0 1px rgba(15,23,42,0.9), 0 0 26px rgba(250,204,21,0.6);
-      display:flex; align-items:center; justify-content:center;
-      font-weight:700; font-size:15px; color:#020617;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 10%, #f97316, #ef4444 40%, #111827 100%);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.8),
+        0 0 26px rgba(248, 113, 113, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 15px;
+      color: white;
     }
 
-    .logo-text-main { font-weight:600; letter-spacing:0.04em; }
-    .logo-text-sub { font-size:11px; text-transform:uppercase; color:var(--muted); letter-spacing:0.08em; }
+    .logo-text-main {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
 
-    .nav-links { display:flex; align-items:center; gap:20px; font-size:14px; color:var(--muted); }
+    .logo-text-sub {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 14px;
+      color: var(--muted);
+    }
 
     .nav-links a.nav-link-cta {
-      padding:7px 14px; border-radius:999px;
-      border:1px solid rgba(250,204,21,0.5);
-      background:radial-gradient(circle at top left, rgba(250,204,21,0.18), rgba(15,23,42,0.9));
-      color:#fefce8; font-weight:500;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: radial-gradient(circle at top left, rgba(248, 113, 113, 0.16), rgba(15, 23, 42, 0.8));
+      color: #e5e7eb;
+      font-weight: 500;
     }
 
-    /* Burger icon (hidden desktop) */
-    .burger {
-      display:none;
-      width:32px; height:32px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.5);
-      background:rgba(15,23,42,0.9);
-      align-items:center; justify-content:center;
-      cursor:pointer;
+    main {
+      flex: 1;
     }
-    .burger-lines {
-      width:16px; height:12px; position:relative;
-    }
-    .burger-lines span {
-      position:absolute; left:0; right:0;
-      height:2px; border-radius:999px;
-      background:#e5e7eb;
-      transition:transform 0.18s ease, opacity 0.18s ease, top 0.18s ease, bottom 0.18s ease;
-    }
-    .burger-lines span:nth-child(1) { top:0; }
-    .burger-lines span:nth-child(2) { top:5px; }
-    .burger-lines span:nth-child(3) { bottom:0; }
-
-    .burger.open .burger-lines span:nth-child(1) {
-      top:5px; transform:rotate(45deg);
-    }
-    .burger.open .burger-lines span:nth-child(2) {
-      opacity:0;
-    }
-    .burger.open .burger-lines span:nth-child(3) {
-      bottom:5px; transform:rotate(-45deg);
-    }
-
-    /* Mobile menu overlay */
-    .mobile-menu {
-      position:fixed;
-      inset:0;
-      background:rgba(15,23,42,0.96);
-      backdrop-filter:blur(18px);
-      display:none;
-      flex-direction:column;
-      justify-content:flex-start;
-      align-items:stretch;
-      padding:70px 24px 24px;
-      z-index:30;
-    }
-    .mobile-menu.open { display:flex; }
-
-    .mobile-menu a,
-    .mobile-menu span {
-      display:block;
-      padding:10px 0;
-      font-size:16px;
-      color:#e5e7eb;
-    }
-    .mobile-menu a.nav-link-cta {
-      margin-top:16px;
-      display:inline-flex;
-      justify-content:center;
-      padding:10px 18px;
-      border-radius:999px;
-      border:1px solid rgba(250,204,21,0.5);
-      background:radial-gradient(circle at top left, rgba(250,204,21,0.18), rgba(15,23,42,0.9));
-      font-size:14px;
-    }
-
-    /* Globale tekst-spacing helpers */
-    .section-block {
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-    }
-
-    /* Hero etc. */
-    main { flex:1; }
 
     .hero {
-      max-width:1120px; margin:0 auto; padding:40px 20px 60px;
-      display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1.1fr);
-      gap:40px; align-items:center;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+      gap: 40px;
+      align-items: center;
     }
 
-    .hero-left {
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-    }
-
-    @media (max-width:900px) {
-      .hero { grid-template-columns:minmax(0,1fr); padding-top:28px; }
-      .trading-card {max-width:95vw;}
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 28px;
+      }
     }
 
     .hero-eyebrow {
-      font-size:12px; text-transform:uppercase; letter-spacing:0.16em;
-      color:var(--muted); margin-bottom:10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 10px;
     }
 
-    .hero-eyebrow span { color:var(--accent); }
+    .hero-eyebrow span {
+      color: var(--accent);
+    }
 
     .hero-title {
-      font-size:clamp(32px,4vw,42px); font-weight:650;
-      letter-spacing:0.02em; margin-bottom:8px;
+      font-size: clamp(32px, 4vw, 42px);
+      font-weight: 650;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
     }
 
     .hero-title span.highlight {
-      background:linear-gradient(to right,#facc15,#eab308);
-      -webkit-background-clip:text; color:transparent;
+      background: linear-gradient(to right, #f97316, #fb7185);
+      -webkit-background-clip: text;
+      color: transparent;
     }
 
     .hero-subtitle {
-      font-size:15px; color:var(--muted);
-      max-width:540px; margin-bottom:0;
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 18px;
     }
 
-    .hero-badges { margin-bottom:0; }
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
 
-    .hero-actions { margin-bottom:0; }
+    .hero-badge {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: #e5e7eb;
+      background: radial-gradient(circle at top left, rgba(248, 113, 113, 0.12), rgba(15, 23, 42, 0.9));
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .btn-primary {
+      padding: 11px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #0b1020;
+      background: linear-gradient(135deg, #f97316, #fb7185);
+      box-shadow:
+        0 14px 30px rgba(248, 113, 113, 0.38),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+    }
+
+    .btn-secondary {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      background: rgba(15, 23, 42, 0.7);
+      color: #e5e7eb;
+    }
 
     .hero-note {
-      font-size:13px; color:var(--muted);
-      max-width:460px; margin-bottom:0;
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 460px;
+      margin-bottom: 18px;
     }
 
     .hero-list {
-      display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:10px 20px; font-size:13px; color:var(--muted);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 20px;
+      font-size: 13px;
+      color: var(--muted);
     }
 
-    .hero-list-item { display:flex; align-items:flex-start; gap:6px; }
+    .hero-list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
 
     .hero-list-item span.dot {
-      margin-top:6px; width:5px; height:5px; border-radius:999px;
-      background:var(--accent); box-shadow:0 0 0 4px rgba(250,204,21,0.24);
+      margin-top: 6px;
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.22);
     }
 
-    .hero-right { position:relative; }
+    .hero-right {
+      position: relative;
+    }
 
     .hero-blob {
-      position:absolute; inset:-80px -60px -80px -60px;
+      position: absolute;
+      inset: -80px -60px -80px -60px;
       background:
-        radial-gradient(circle at top, rgba(250,204,21,0.22), transparent 55%),
-        radial-gradient(circle at bottom, rgba(56,189,248,0.18), transparent 55%);
-      opacity:0.35; filter:blur(20px); pointer-events:none;
+        radial-gradient(circle at top, rgba(248, 113, 113, 0.26), transparent 55%),
+        radial-gradient(circle at bottom, rgba(56, 189, 248, 0.2), transparent 55%);
+      opacity: 0.3;
+      filter: blur(20px);
+      pointer-events: none;
     }
 
     .trader-card {
-      position:relative; border-radius:22px;
-      background:radial-gradient(circle at top left, rgba(250,204,21,0.12), rgba(15,23,42,0.98));
-      border:1px solid rgba(148,163,184,0.5);
-      box-shadow:0 28px 70px rgba(15,23,42,0.98), 0 0 0 1px rgba(15,23,42,0.9);
-      padding:20px 20px 16px; max-width:95vw; margin-left:auto;
-      backdrop-filter:blur(20px); overflow:hidden;
-      display:flex; flex-direction:column; gap:14px;
-      width:100%;
+      position: relative;
+      border-radius: 22px;
+      background: radial-gradient(circle at top left, rgba(248, 113, 113, 0.16), rgba(15, 23, 42, 0.98));
+      border: 1px solid rgba(148, 163, 184, 0.38);
+      box-shadow:
+        0 28px 70px rgba(15, 23, 42, 0.95),
+        0 0 0 1px rgba(15, 23, 42, 0.8);
+      padding: 20px 20px 16px;
+      max-width: 420px;
+      margin-left: auto;
+      backdrop-filter: blur(20px);
+      overflow: hidden;
     }
 
     .trader-card-header {
-      display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
     }
 
-    .profile-main { display:flex; align-items:center; gap:12px; }
+    .profile-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
     .avatar-ring {
-      width:50px; height:50px; border-radius:999px;
-      background:conic-gradient(from 220deg,#facc15,#eab308,#22c55e,#38bdf8,#facc15);
-      padding:2px; display:flex; align-items:center; justify-content:center;
+      width: 54px;
+      height: 54px;
+      border-radius: 999px;
+      background:
+        conic-gradient(from 220deg, #f97316, #fb7185, #22c55e, #0ea5e9, #f97316);
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .avatar-inner {
-      width:100%; height:100%; border-radius:inherit;
-      background:radial-gradient(circle at 30% 0%,#facc15,#0f172a 50%,#020617 100%);
-      display:flex; align-items:center; justify-content:center;
-      color:#fefce8; font-weight:600; font-size:18px;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: radial-gradient(circle at 30% 0%, #f97316, #111827 50%, #020617 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fefce8;
+      font-weight: 600;
+      font-size: 20px;
     }
 
-    .profile-text-main { font-size:15px; font-weight:600; }
-    .profile-text-sub { font-size:12px; color:var(--muted); }
+    .profile-text-main {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .profile-text-sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
 
     .consistency-pill {
-      padding:4px 9px; border-radius:999px; font-size:11px;
-      text-transform:uppercase; letter-spacing:0.14em;
-      background:rgba(22,163,74,0.1); color:#bbf7d0;
-      border:1px solid rgba(34,197,94,0.7);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: rgba(22, 163, 74, 0.14);
+      color: #bbf7d0;
+      border: 1px solid rgba(34, 197, 94, 0.7);
     }
 
-    .trader-card-body { display:flex; flex-direction:column; gap:10px; }
+    .trader-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
 
-    .stats-row { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
 
     .stat-box {
-      padding:7px 8px; border-radius:12px;
-      border:1px solid rgba(148,163,184,0.4);
-      background:radial-gradient(circle at top, rgba(15,23,42,0.96), rgba(15,23,42,0.98));
+      padding: 8px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.96));
     }
 
     .stat-label {
-      font-size:10px; text-transform:uppercase; letter-spacing:0.12em;
-      color:var(--muted); margin-bottom:3px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 4px;
     }
 
-    .stat-value { font-size:16px; font-weight:600; }
-    .stat-value.positive { color:#4ade80; }
-    .stat-value.neutral { color:#e5e7eb; }
+    .stat-value {
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .stat-value.positive {
+      color: #4ade80;
+    }
+
+    .stat-value.neutral {
+      color: #e5e7eb;
+    }
 
     .label-pill {
-      display:inline-flex; align-items:center; gap:4px;
-      padding:4px 8px; border-radius:999px;
-      background:rgba(15,23,42,0.96);
-      border:1px solid rgba(148,163,184,0.5);
-      font-size:11px; color:var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      font-size: 11px;
+      color: var(--muted);
     }
 
-    .label-dot { width:7px; height:7px; border-radius:999px; background:var(--accent); }
-
-    .mini-chart {
-      margin-top:4px; padding:10px 8px 8px;
-      border-radius:12px;
-      background:radial-gradient(circle at top, rgba(15,23,42,0.96), rgba(15,23,42,0.98));
-      border:1px solid rgba(148,163,184,0.4);
+    .label-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
     }
 
-    .mini-chart-header {
-      display:flex; justify-content:space-between; align-items:center;
-      font-size:11px; color:#9ca3af; margin-bottom:8px;
+    .equity-curve {
+      position: relative;
+      margin-top: 8px;
+      border-radius: 12px;
+      padding: 9px 9px 20px;
+      background: radial-gradient(circle at top, rgba(8, 47, 73, 0.9), rgba(8, 47, 73, 0.4));
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      overflow: hidden;
     }
 
-    .mini-chart-bars {
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:6px; height:80px; margin-bottom:6px;
+    .equity-curve-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #bae6fd;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .mini-bar {
-      width:8px; border-radius:5px 5px 0 0;
-      background:linear-gradient(to top,#16a34a,#4ade80);
+    .equity-curve-value {
+      font-size: 11px;
+      color: #7dd3fc;
     }
 
-    .mini-bar.loss {
-      border-radius:5px 5px 0 0;
-      background:linear-gradient(to top,#ef4444,#f97373);
-      align-self:flex-end;
+    .curve-line {
+      position: relative;
+      height: 60px;
+      border-radius: 999px;
+      background:
+        linear-gradient(to top, rgba(15, 23, 42, 0), rgba(15, 23, 42, 0.8)),
+        radial-gradient(circle at bottom, rgba(34, 197, 94, 0.5), transparent 55%);
+      mask-image: radial-gradient(circle at left, black 10%, transparent 70%);
     }
 
-    .mini-chart-xlabels {
-      display:flex; justify-content:space-between;
-      font-size:9px; color:#64748b;
+    .curve-stroke {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, rgba(34, 197, 94, 0.2), rgba(52, 211, 153, 1), rgba(56, 189, 248, 0.1));
+      mix-blend-mode: screen;
+      opacity: 0.6;
+      filter: blur(0.5px);
+      mask-image: linear-gradient(120deg, transparent 0, black 15%, black 85%, transparent 100%);
     }
 
-    .mini-chart-legend {
-      display:flex; justify-content:flex-end; gap:10px;
-      font-size:9px; color:#9ca3af; margin-top:4px;
+    .curve-points {
+      position: absolute;
+      right: 16px;
+      bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #bbf7d0;
     }
 
-    .mini-chart-legend span::before {
-      content:""; display:inline-block; width:7px; height:7px; border-radius:999px;
-      margin-right:4px; vertical-align:middle;
-    }
-
-    .mini-chart-legend .pos::before {
-      background:linear-gradient(to top,#16a34a,#4ade80);
-    }
-
-    .mini-chart-legend .neg::before {
-      background:linear-gradient(to top,#ef4444,#f97373);
+    .curve-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.3);
     }
 
     .trader-footer {
-      display:flex; justify-content:space-between; align-items:center; gap:10px;
-      font-size:11px; color:var(--muted); margin-top:4px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--muted);
     }
 
-    .risk-note { max-width:250px; text-align:right; display:none; }
+    .risk-note {
+      max-width: 260px;
+    }
 
     .tagline {
-      font-size:11px; text-transform:uppercase; letter-spacing:0.18em;
-      color:#9ca3af; text-align:left;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #9ca3af;
     }
 
-    .tagline span { color:#facc15; }
+    .tagline span {
+      color: #f97316;
+    }
 
     .how-it-works {
-      max-width:1120px; margin:0 auto; padding:0 20px 60px;
-      border-top:1px solid rgba(148,163,184,0.18);
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+      border-top: 1px solid rgba(148, 163, 184, 0.18);
     }
 
     .hiw-inner {
-      padding-top:28px;
-      display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);
-      gap:30px;
+      padding-top: 28px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 30px;
     }
 
-    @media (max-width:900px) {
-      .hiw-inner { grid-template-columns:minmax(0,1fr); }
+    @media (max-width: 900px) {
+      .hiw-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
-    .hiw-inner > div:first-child {
-      display:flex;
-      flex-direction:column;
-      gap:18px;
+    .hiw-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 10px;
     }
 
-    .hiw-title { font-size:22px; font-weight:600; margin-bottom:4px; }
-    .hiw-subtitle { font-size:14px; color:var(--muted); max-width:480px; margin-bottom:0; }
+    .hiw-subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 18px;
+    }
 
-    .hiw-steps { display:grid; gap:14px; font-size:14px; }
-    .hiw-step { display:grid; grid-template-columns:auto minmax(0,1fr); gap:10px; align-items:flex-start; }
+    .hiw-steps {
+      display: grid;
+      gap: 14px;
+      font-size: 14px;
+    }
+
+    .hiw-step {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: flex-start;
+    }
+
     .hiw-step-number {
-      width:24px; height:24px; border-radius:999px;
-      border:1px solid rgba(148,163,184,0.6);
-      display:flex; align-items:center; justify-content:center;
-      font-size:12px; color:#e5e7eb; background:rgba(15,23,42,0.9);
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #e5e7eb;
+      background: rgba(15, 23, 42, 0.7);
     }
-    .hiw-step-title { font-weight:500; font-size:14px; }
-    .hiw-step-text { font-size:13px; color:var(--muted); }
+
+    .hiw-step-title {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .hiw-step-text {
+      font-size: 13px;
+      color: var(--muted);
+    }
 
     .hiw-aside {
-      border-radius:16px;
-      border:1px solid rgba(148,163,184,0.45);
-      background:radial-gradient(circle at top, rgba(15,23,42,0.98), rgba(15,23,42,0.96));
-      padding:18px 16px;
-      font-size:13px; color:var(--muted);
-      display:flex;
-      align-content: space-between;
-      justify-content: space-between;
-      flex-direction: column;
-      gap:18px;
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9));
+      padding: 18px 16px;
+      font-size: 13px;
+      color: var(--muted);
     }
 
     .hiw-aside-title {
-      font-size:12px; text-transform:uppercase; letter-spacing:0.16em;
-      color:#e5e7eb; margin-bottom:10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #e5e7eb;
+      margin-bottom: 10px;
     }
 
-    .hiw-pills { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+    .hiw-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
     .hiw-pill {
-      padding:5px 10px; border-radius:999px; font-size:11px;
-      background:rgba(15,23,42,0.98); border:1px solid rgba(148,163,184,0.4); color:#e5e7eb;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #e5e7eb;
     }
 
     footer {
-      border-top:1px solid rgba(148,163,184,0.22);
-      padding:16px 20px 20px;
-      font-size:11px; color:var(--muted); text-align:center;
-    }
-
-    /* RESPONSIVE NAV: burger bij <=780px */
-    @media (max-width:780px) {
-      .nav-links { display:none; }
-      .burger { display:flex; }
+      border-top: 1px solid rgba(148, 163, 184, 0.22);
+      padding: 16px 20px 20px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
     }
   </style>
 </head>
@@ -432,79 +607,62 @@
             <div class="logo-text-sub">Private Copy Trading Community</div>
           </div>
         </div>
-
-        <!-- Desktop links -->
         <div class="nav-links">
-          <span>Hoe het werkt</span>
-          <span>Onze traders</span>
-          <a href="#" class="nav-link-cta">Start met Dreamz Wealth</a>
+          <span>How it works</span>
+          <span>Our traders</span>
+          <a href="#" class="nav-link-cta">Start with Vantage</a>
         </div>
-
-        <!-- Burger icon -->
-        <button class="burger" aria-label="Menu openen">
-          <div class="burger-lines">
-            <span></span><span></span><span></span>
-          </div>
-        </button>
       </div>
-
-      <!-- Mobile menu -->
-      <nav class="mobile-menu">
-        <span>Hoe het werkt</span>
-        <span>Onze traders</span>
-        <a href="#" class="nav-link-cta">Start met Dreamz Wealth</a>
-      </nav>
     </header>
 
     <main>
-      <!-- HERO -->
       <section class="hero">
-        <div class="hero-left section-block">
+        <div class="hero-left">
           <div class="hero-eyebrow">
-            Private Copy Trading · <span>Aangedreven door Dreamz Wealth</span>
+            Private Copy Trading · <span>Powered by Vantage</span>
           </div>
           <h1 class="hero-title">
-            Kopieer ervaren traders.<br />
-            Volledig passief.
+            Copy <span class="highlight">Avatar Fire and Ash</span>.<br />
+            Trade like a pro, fully hands‑off.
           </h1>
           <p class="hero-subtitle">
-            Koppel aan onze geselecteerde copytraders en laat je kapitaal automatisch werken — zonder zelf één enkele trade te hoeven plaatsen.
+            Link your own Vantage account to our experienced copy traders and let your capital grow automatically — without having to place a single trade yourself.
           </p>
 
           <div class="hero-badges">
-            <div class="hero-badge">Geen trading kennis nodig</div>
-            <div class="hero-badge">Je geld blijft op je eigen account</div>
+            <div class="hero-badge">No trading knowledge required</div>
+            <div class="hero-badge">Your capital stays in your own account</div>
           </div>
 
           <div class="hero-actions">
             <button class="btn-primary">
-              Start met ons
+              Start with Vantage
             </button>
             <button class="btn-secondary">
-              Bekijk onze traders
+              View full Fire and Ash stats
             </button>
           </div>
 
           <p class="hero-note">
-            Kies uit meerdere strategieën, verdeel je investering over verschillende traders en volg de resultaten in realtime in je eigen account.
+            Join our private copy trading community, choose how you divide your investment across our traders, and monitor real‑time results directly in your own account.
           </p>
 
           <div class="hero-list">
             <div class="hero-list-item">
               <span class="dot"></span>
-              <span>Meer dan 6 actieve copytraders om te volgen.</span>
+              <span>6+ active copy traders you can follow.</span>
             </div>
             <div class="hero-list-item">
               <span class="dot"></span>
-              <span>Volledig passief: je trading draait 24/7 automatisch.</span>
+              <span>Fully passive: your trading runs 24/7 on autopilot.</span>
             </div>
             <div class="hero-list-item">
               <span class="dot"></span>
-              <span>Verdeel je kapitaal flexibel over verschillende traders.</span>
+              <span>Choose how you divide your capital across traders.</span>
             </div>
             <div class="hero-list-item">
               <span class="dot"></span>
-              <span>Stop of pas het kopiëren op ieder moment aan.</span>
+              <span>Stop or adjust copying at any time.</span>
             </div>
           </div>
         </div>
@@ -515,96 +673,81 @@
             <div class="trader-card-header">
               <div class="profile-main">
                 <div class="avatar-ring">
-                  <div class="avatar-inner">FA</div>
+                  <div class="avatar-inner">
+                    FA
+                  </div>
                 </div>
                 <div>
                   <div class="profile-text-main">Avatar Fire and Ash</div>
                   <div class="profile-text-sub">Indices &amp; FX swing trader</div>
                 </div>
               </div>
-              <div class="consistency-pill">Hoge&nbsp;consistentie</div>
+              <div class="consistency-pill">High consistency</div>
             </div>
 
             <div class="trader-card-body">
               <div class="stats-row">
                 <div class="stat-box">
-                  <div class="stat-label">Totaal rendement</div>
+                  <div class="stat-label">Total return</div>
                   <div class="stat-value positive">+128%</div>
                 </div>
                 <div class="stat-box">
-                  <div class="stat-label">Winstmaanden</div>
+                  <div class="stat-label">Profitable months</div>
                   <div class="stat-value neutral">9 / 10</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Max drawdown</div>
+                  <div class="stat-value neutral">11%</div>
                 </div>
               </div>
 
               <div class="label-pill">
                 <span class="label-dot"></span>
-                <span>Kapitaal op je eigen account</span>
+                <span>Live on Vantage · Capital in your own account</span>
               </div>
 
-              <!-- Compacte mini-chart in dezelfde kaart -->
-              <div class="mini-chart">
-                <div class="mini-chart-header">
-                  <span>Wekelijkse performance (voorbeeld)</span>
-                  <span>Winst &amp; verlies weken</span>
+              <div class="equity-curve">
+                <div class="equity-curve-title">
+                  <span>Fire and Ash equity curve</span>
+                  <span class="equity-curve-value">Sample visual – not live data</span>
                 </div>
-                <div class="mini-chart-bars">
-                  <div class="mini-bar" style="height:38px;"></div>
-                  <div class="mini-bar" style="height:60px;"></div>
-                  <div class="mini-bar loss" style="height:40px;"></div>
-                  <div class="mini-bar" style="height:80px;"></div>
-                  <div class="mini-bar" style="height:55px;"></div>
-                  <div class="mini-bar" style="height:30px;"></div>
-                  <div class="mini-bar" style="height:35px;"></div>
-                  <div class="mini-bar" style="height:45px;"></div>
+                <div class="curve-line">
+                  <div class="curve-stroke"></div>
                 </div>
-                <div class="mini-chart-xlabels">
-                  <span>13/03</span>
-                  <span>20/03</span>
-                  <span>27/03</span>
-                  <span>03/04</span>
-                  <span>10/04</span>
-                  <span>17/04</span>
-                  <span>24/04</span>
-                  <span>01/05</span>
-                </div>
-                <div class="mini-chart-legend">
-                  <span class="pos">Winstweek</span>
-                  <span class="neg">Verliesweek</span>
+                <div class="curve-points">
+                  <span class="curve-dot"></span>
+                  <span>Uptrend with controlled pullbacks</span>
                 </div>
               </div>
             </div>
 
             <div class="trader-footer">
-              <div class="tagline">
-                Waar <span>Dreamz</span> veranderen in <span>Wealth</span>
-              </div>
               <div class="risk-note">
-                In het verleden behaalde resultaten bieden geen garantie voor de toekomst. Tradingsproducten zijn risicovol. Trade alleen met kapitaal dat je kunt missen.
+                Past performance is not a guarantee of future results. Trading involves risk. Only trade with capital you can afford to lose.
+              </div>
+              <div class="tagline">
+                Where <span>Dreams</span> become <span>Wealth</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- HOE HET WERKT -->
       <section class="how-it-works" id="how-it-works">
         <div class="hiw-inner">
-          <div class="section-block">
-            <div>
-              <h2 class="hiw-title">Hoe het werkt</h2>
-              <p class="hiw-subtitle">
-                Link, verdeel en profiteer. Binnen Dreamz Wealth koppel je je eigen trading account aan één of meerdere van onze copytraders. Alles draait volledig automatisch terwijl jij de controle houdt.
-              </p>
-            </div>
+          <div>
+            <h2 class="hiw-title">How it works</h2>
+            <p class="hiw-subtitle">
+              Link, divide and profit. Within Dreamz Wealth you connect your own trading account to one or more of our copy traders. Everything runs fully automatically while you stay in full control.
+            </p>
 
             <div class="hiw-steps">
               <div class="hiw-step">
                 <div class="hiw-step-number">1</div>
                 <div>
-                  <div class="hiw-step-title">Open een account</div>
+                  <div class="hiw-step-title">Create an account</div>
                   <div class="hiw-step-text">
-                    Registreer bij onze partnerbroker Vantage en open je trading account.
+                    Register with our partner broker Vantage and open your trading account.
                   </div>
                 </div>
               </div>
@@ -612,9 +755,9 @@
               <div class="hiw-step">
                 <div class="hiw-step-number">2</div>
                 <div>
-                  <div class="hiw-step-title">Koppel aan traders</div>
+                  <div class="hiw-step-title">Link to traders</div>
                   <div class="hiw-step-text">
-                    Kies uit traders zoals Avatar Fire and Ash, Bullions, Fi Trade Pro, Daily Green Scalper, IQ 88888 X2 of Invincible Trader.
+                    Choose from traders like Avatar Fire and Ash, Bullions, Fi Trade Pro, Daily Green Scalper, IQ 88888 X2 or Invincible Trader.
                   </div>
                 </div>
               </div>
@@ -622,9 +765,9 @@
               <div class="hiw-step">
                 <div class="hiw-step-number">3</div>
                 <div>
-                  <div class="hiw-step-title">Automatisch kopiëren</div>
+                  <div class="hiw-step-title">Automatic copying</div>
                   <div class="hiw-step-text">
-                    Elke trade van je gekozen traders wordt automatisch gekopieerd naar jouw account op basis van jouw risicoinstellingen.
+                    Every trade from your chosen traders is copied automatically into your own account according to your risk settings.
                   </div>
                 </div>
               </div>
@@ -632,27 +775,25 @@
               <div class="hiw-step">
                 <div class="hiw-step-number">4</div>
                 <div>
-                  <div class="hiw-step-title">Ontvang resultaten</div>
+                  <div class="hiw-step-title">Receive returns</div>
                   <div class="hiw-step-text">
-                    Jij profiteert volledig passief, met realtime resultaten zichtbaar in je eigen account.
+                    You enjoy the profits fully passively, with real‑time results visible in your account at all times.
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <aside class="hiw-aside section-block">
-            <div class="top">
-              <div class="hiw-aside-title">Waarom copytraden met Dreamz Wealth</div>
-              <p>
-                Jij blijft aan het stuur: je geld staat op je eigen trading account, je kunt je risico opschalen of afbouwen en zelf bepalen hoe je je investering verdeelt over de verschillende traders in de community.
-              </p>
-            </div>
+          <aside class="hiw-aside">
+            <div class="hiw-aside-title">Why copy trade with Dreamz Wealth</div>
+            <p>
+              You stay in charge: your funds remain in your own Vantage account, you can scale risk up or down, and you decide how to divide your investment across different traders in the community.
+            </p>
             <div class="hiw-pills">
-              <div class="hiw-pill">100% volledig passief</div>
-              <div class="hiw-pill">24/7 automatisch actief</div>
-              <div class="hiw-pill">Stop kopiëren op ieder moment</div>
-              <div class="hiw-pill">Realtime resultaten in jouw account</div>
+              <div class="hiw-pill">100% fully passive</div>
+              <div class="hiw-pill">24/7 automatically active</div>
+              <div class="hiw-pill">Stop copying anytime</div>
+              <div class="hiw-pill">Real‑time results in your account</div>
             </div>
           </aside>
         </div>
@@ -660,49 +801,8 @@
     </main>
 
     <footer>
-      Dreamz Wealth is een private copy trading community. Niets op deze website is beleggingsadvies. Traden in CFD’s en derivaten gaat gepaard met een hoog risico.
+      Dreamz Wealth is a private copy trading community. Nothing on this website is investment advice. Trading CFDs and derivatives involves a high level of risk.
     </footer>
   </div>
-
-  <script>
-    const burger = document.querySelector('.burger');
-    const mobileMenu = document.querySelector('.mobile-menu');
-
-    function toggleMenu(forceState) {
-      const isOpen = typeof forceState === 'boolean'
-        ? forceState
-        : !burger.classList.contains('open');
-
-      burger.classList.toggle('open', isOpen);
-      mobileMenu.classList.toggle('open', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    }
-
-    burger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleMenu();
-    });
-
-    // Klik op een item in het menu sluit het menu
-    mobileMenu.addEventListener('click', () => {
-      toggleMenu(false);
-    });
-
-    // Klik buiten burger + menu sluit het menu
-    document.addEventListener('click', (e) => {
-      const clickInsideMenu = mobileMenu.contains(e.target);
-      const clickOnBurger = burger.contains(e.target);
-      if (!clickInsideMenu && !clickOnBurger) {
-        toggleMenu(false);
-      }
-    });
-
-    // Bij resize naar desktop menu resetten
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 780) {
-        toggleMenu(false);
-      }
-    });
-  </script>
 </body>
 </html>
